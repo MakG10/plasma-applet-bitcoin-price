@@ -161,7 +161,7 @@ function getAllCurrencies() {
 
 function convert(value, from, to, callback) {
 	var currencyPair = from + '_' + to;
-	request(currencyApiUrl + '/api/v3/convert?q=' + currencyPair + '&compact=ultra', function(data) {
+	request(currencyApiUrl + '/api/v3/convert?q=' + currencyPair + '&compact=ultra&apiKey=7ae28a54ca393b581039', function(data) {
 		data = JSON.parse(data);
 		var rate = data[currencyPair];
 		
