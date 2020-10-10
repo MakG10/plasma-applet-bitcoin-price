@@ -1,5 +1,5 @@
 import QtQuick 2.1
-import QtQuick.Controls 1.1
+import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.1
 
 import ".."
@@ -66,10 +66,17 @@ Item {
 			text: i18n("Refresh rate:")
 		}
 		
-		SpinBox {
-			id: refreshRate
-			suffix: i18n(" minutes")
-			minimumValue: 1
+		Row {
+			SpinBox {
+				id: refreshRate
+				from: 1
+			}
+
+			Label {
+				text: i18n(" minutes")
+				height: parent.height
+				verticalAlignment: Text.AlignVCenter
+			}
 		}
 		
 		Label {
@@ -128,27 +135,21 @@ Item {
 			text: i18n("On click:")
 		}
 		
-		ExclusiveGroup { id: clickGroup }
-		
-		RadioButton {
-			Layout.row: 7
-			Layout.column: 1
-			exclusiveGroup: clickGroup
-			checked: cfg_onClickAction == 'refresh'
-			text: i18n("Refresh")
-			onClicked: {
-				cfg_onClickAction = 'refresh'
+		ColumnLayout {
+			RadioButton {
+				checked: cfg_onClickAction == 'refresh'
+				text: i18n("Refresh")
+				onClicked: {
+					cfg_onClickAction = 'refresh'
+				}
 			}
-		}
 
-		RadioButton {
-			Layout.row: 8
-			Layout.column: 1
-			exclusiveGroup: clickGroup
-			checked: cfg_onClickAction == 'website'
-			text: i18n("Open market's website")
-			onClicked: {
-				cfg_onClickAction = 'website'
+			RadioButton {
+				checked: cfg_onClickAction == 'website'
+				text: i18n("Open market's website")
+				onClicked: {
+					cfg_onClickAction = 'website'
+				}
 			}
 		}
 	}

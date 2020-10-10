@@ -12,7 +12,7 @@ ServiceTypes=Plasma/Applet
 
 X-KDE-PluginInfo-Author=Maciej Gierej
 X-KDE-PluginInfo-Email=makg@makg.eu
-X-KDE-PluginInfo-Version=1.2
+X-KDE-PluginInfo-Version=1.2.2
 X-KDE-PluginInfo-Website=http://maciej.gierej.pl
 X-KDE-PluginInfo-Category=Utilities
 X-KDE-PluginInfo-Depends=

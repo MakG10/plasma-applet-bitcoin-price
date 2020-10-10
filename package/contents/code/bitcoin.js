@@ -1,29 +1,11 @@
 var sources = [
 	{
-		name: 'CoinMarketCap',
-		url: 'https://api.coinmarketcap.com/v1/ticker/bitcoin/',
-		homepage: 'https://coinmarketcap.com/currencies/bitcoin/',
+		name: 'Blockchain.info',
+		url: 'https://blockchain.info/ticker',
+		homepage: 'https://blockchain.info/',
 		currency: 'USD',
 		getRate: function(data) {
-			return data[0].price_usd;
-		}
-	},
-	{
-		name: 'Bitmarket.pl',
-		url: 'https://www.bitmarket.pl/json/BTCPLN/ticker.json',
-		homepage: 'https://www.bitmarket.pl/market.php?market=BTCPLN',
-		currency: 'PLN',
-		getRate: function(data) {
-			return data.ask;
-		}
-	},
-	{
-		name: 'Bitmaszyna.pl',
-		url: 'https://bitmaszyna.pl/api/BTCPLN/ticker.json',
-		homepage: 'https://bitmaszyna.pl/',
-		currency: 'PLN',
-		getRate: function(data) {
-			return data.ask;
+			return data.USD.last;
 		}
 	},
 	{
@@ -36,19 +18,19 @@ var sources = [
 		}
 	},
 	{
-		name: 'Blockchain.info',
-		url: 'https://blockchain.info/ticker',
-		homepage: 'https://blockchain.info/',
-		currency: 'USD',
-		getRate: function(data) {
-			return data.USD.last;
-		}
-	},
-	{
 		name: 'Bitfinex',
 		url: 'https://api.bitfinex.com/v1/pubticker/btcusd',
 		homepage: 'https://www.bitfinex.com/',
 		currency: 'USD',
+		getRate: function(data) {
+			return data.ask;
+		}
+	},
+	{
+		name: 'Bitmaszyna.pl',
+		url: 'https://bitmaszyna.pl/api/BTCPLN/ticker.json',
+		homepage: 'https://bitmaszyna.pl/',
+		currency: 'PLN',
 		getRate: function(data) {
 			return data.ask;
 		}
@@ -72,15 +54,6 @@ var sources = [
 		}
 	},
 	{
-		name: 'GDAX',
-		url: 'https://api-public.sandbox.gdax.com/products/BTC-USD/ticker',
-		homepage: 'https://www.gdax.com/',
-		currency: 'USD',
-		getRate: function(data) {
-			return data.ask;
-		}
-	},
-	{
 		name: 'CEX.IO',
 		url: 'https://cex.io/api/last_price/BTC/USD',
 		homepage: 'https://cex.io',
@@ -91,7 +64,7 @@ var sources = [
 	},
 ];
 
-var currencyApiUrl = 'http://free.currencyconverterapi.com';
+var currencyApiUrl = 'https://api.exchangeratesapi.io';
 
 var currencySymbols = {
 	'USD': '$',  // US Dollar
@@ -160,10 +133,9 @@ function getAllCurrencies() {
 }
 
 function convert(value, from, to, callback) {
-	var currencyPair = from + '_' + to;
-	request(currencyApiUrl + '/api/v3/convert?q=' + currencyPair + '&compact=ultra', function(data) {
+	request(currencyApiUrl + '/latest?base=' + from, function(data) {
 		data = JSON.parse(data);
-		var rate = data[currencyPair];
+		var rate = data['rates'][to];
 		
 		callback(value * rate);
 	});
